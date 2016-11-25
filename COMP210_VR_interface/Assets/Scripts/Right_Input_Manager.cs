@@ -20,6 +20,8 @@ public class Right_Input_Manager : MonoBehaviour {
         if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
         {
             Debug.Log("Trigger pressed");
+            falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
+            falcon.GetComponent<Animation>().CrossFade("FA_Dead");
             device.TriggerHapticPulse(400);
         }
         if (device.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))

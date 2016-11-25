@@ -14,17 +14,17 @@ public class Falcon_Controller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-       trackedObject = GetComponent<SteamVR_TrackedObject>();
+       //serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
+       //trackedObject = GetComponent<SteamVR_TrackedObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        device = SteamVR_Controller.Input((int)trackedObject.index);
+        //device = SteamVR_Controller.Input((int)trackedObject.index);
 
-        if (device.GetAxis().x != 0 || device.GetAxis().y != 0)
+        /*if (device.GetAxis().x != 0 || device.GetAxis().y != 0)
         {
             Debug.Log(device.GetAxis().x + " " + device.GetAxis().y);
         }
@@ -34,7 +34,8 @@ public class Falcon_Controller : MonoBehaviour
             device.TriggerHapticPulse(800);
             falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
             falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
-        }
+        }*/
+
         if (collisionHappened == false)
         {
             float step = speed * Time.deltaTime;
@@ -50,7 +51,7 @@ public class Falcon_Controller : MonoBehaviour
         {
             falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
             falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
-            serialController.SendSerialMessage("p");
+            //serialController.SendSerialMessage("p");
             collisionHappened = true;
             
         }

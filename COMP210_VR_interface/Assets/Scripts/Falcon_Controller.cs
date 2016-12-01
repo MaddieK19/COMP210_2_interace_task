@@ -6,16 +6,19 @@ public class Falcon_Controller : MonoBehaviour
     public GameObject falcon;
     public GameObject controller;
     public SerialController serialController;
+    public GameObject flightPath;
     public float speed;
     public bool collisionHappened = false;
     private float step;
     public SteamVR_TrackedObject trackedObject;
     public SteamVR_Controller.Device device;
+
     // Use this for initialization
     void Start()
     {
-       //serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-       //trackedObject = GetComponent<SteamVR_TrackedObject>();
+       // transform.position = flightPath.transform.position;
+        //serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
+        //trackedObject = GetComponent<SteamVR_TrackedObject>();
     }
 
     // Update is called once per frame
@@ -36,12 +39,27 @@ public class Falcon_Controller : MonoBehaviour
             falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
         }*/
 
+        /*
         if (collisionHappened == false)
         {
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, controller.transform.position, step);
-        }
+        }*/
 
+
+        //Vector3 direction;
+        //direction = new Vector3(flightPath.transform.position.x, 0, flightPath.transform.position.z);
+        //transform.LookAt(transform.position + 10 * direction);
+        //transform.Rotate(0, flightPath.transform.position.x, 0);
+
+        if (flightPath.transform.position.x > -1)
+        {
+            transform.Rotate(0, flightPath.transform.position.x, 0, Space.World);
+        }
+        else
+            transform.Rotate(0, -flightPath.transform.position.x, 0, Space.World);
+
+        transform.position = flightPath.transform.position;
     }
 
 

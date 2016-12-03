@@ -22,15 +22,23 @@
 \begin{document}
 	
 \maketitle
-The interface I've designed uses the HTC Vive and Vive controllers. The Vive HMD is used to move the camera and the controllers are used to interact with the interface.
+The interface I've designed uses the HTC Vive and controllers. Due to time constraints and lack of parts I couldn't set up the Arduino however I have integrated the code into Unity and written the Arduino code so it is ready to be used and just requires the Arduino and servos to be plugged in. 
+
 \begin{figure}[h]
 	\includegraphics[width=0.8\linewidth]{vive_controller.png}
-	\caption{  }
+	\caption{Vive Controllers  }
 \end{figure} 
 
-The player presses the trigger on the right controller to summon the falcon which will move towards the controller. When the game registers a collision between the controller and the falcon it sends out a "p" through the serial which can be received by an Arduino. 
+The player uses the Vive HMD and controllers to interact with the interface. The HMD moves the camera and the controllers are used to interact with the bird.  The player presses the trigger on the right controller to summon the falcon which will move towards the controller. When the game registers a collision between the controller and the falcon it sends out a ``p" through the serial which can be received by an Arduino. This uses the SerialCommUnity package for Unity to send characters through the serial.
 
-On receiving the serial input the Arduino moves the servos to specified amount using the code below.
+\begin{figure}[h]
+	\includegraphics[width=1.0\linewidth]{unity_code.png}
+	\caption{ Unity code for communicating with Arduino }
+\end{figure} 
+
+Above shows the C\# code used to send the character through the serial.
+
+On receiving the serial input the Arduino moves the servos to specified position using the code below.
 
 \section{Arduino Code}
 \begin{lstlisting}
@@ -93,12 +101,16 @@ void pinch() {
 
 \end{lstlisting}
 
+Both servos move at the same time to simulate falcon claws as the falcon lands on the players arm in game.
+
+\newpage
 \section{Arduino Diagram}
+
 \begin{figure}[h]
 	\includegraphics[width=1.0\linewidth]{arduino_diagram.png}
 	\caption{ Arduino Uno and two servos }
 \end{figure} 
-Both servos would move at the same time to simulate falcon claws as the falcon lands on the players arm in game.
+The diagram above shows how the servos and Arduino would be connected. I would also want to add a wireless connection between the Arduino and computer running the game as VR already involves many wires so it would be easier for the player to have the Arduino wireless on their arm. 
 
 \bigskip
 

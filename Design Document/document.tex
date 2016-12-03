@@ -35,10 +35,8 @@ On receiving the serial input the Arduino moves the servos to specified amount u
 \section{Arduino Code}
 \begin{lstlisting}
 #include <Servo.h>
-
 Servo clawServos[2];  
 // creates and arrary of servos 
-
 int pos = 0; 
 String inputString = "";
 boolean stringComplete = false;
@@ -50,7 +48,6 @@ void setup() {
 	clawServos[1].attach(10);
 	// attaches the servos on pin 9 and 10 to the servo object   
 }
-
 void loop() {
 	if (stringComplete) {
 	Serial.println(inputString);
@@ -73,7 +70,6 @@ void serialEvent() {
 		}
 	}
 }
-
 void pinch() {
 	for (pos = 0; pos <= 180; pos += 1) {
 	// goes from 0 degrees to 180 degrees
@@ -95,20 +91,19 @@ void pinch() {
 	}
 }
 
-
-
 \end{lstlisting}
 
 \section{Arduino Diagram}
 \begin{figure}[h]
 	\includegraphics[width=1.0\linewidth]{arduino_diagram.png}
-	\caption{  }
+	\caption{ Arduino Uno and two servos }
 \end{figure} 
+Both servos would move at the same time to simulate falcon claws as the falcon lands on the players arm in game.
+
 \bigskip
 
 
 
 \bibliographystyle{ieeetr}
-%\bibliography{comp230_1}
 	
 \end{document}

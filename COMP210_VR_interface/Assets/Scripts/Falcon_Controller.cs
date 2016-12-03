@@ -7,71 +7,75 @@ public class Falcon_Controller : MonoBehaviour
     public GameObject controller;
     public SerialController serialController;
     public GameObject flightPath;
+    public SteamVR_Controller.Device device;
+
     public float speed;
     public bool collisionHappened = false;
+    public bool isIdle = true;
     private float step;
-    public SteamVR_TrackedObject trackedObject;
-    public SteamVR_Controller.Device device;
 
     // Use this for initialization
     void Start()
     {
-       // transform.position = flightPath.transform.position;
-        //serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-        //trackedObject = GetComponent<SteamVR_TrackedObject>();
+       falcon.transform.position = flightPath.transform.position;
+       //serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        //device = SteamVR_Controller.Input((int)trackedObject.index);
-
-        /*if (device.GetAxis().x != 0 || device.GetAxis().y != 0)
-        {
-            Debug.Log(device.GetAxis().x + " " + device.GetAxis().y);
-        }
-        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
-        {
-            Debug.Log("Trigger pressed");
-            device.TriggerHapticPulse(800);
-            falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
-            falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
-        }*/
-
-        /*
-        if (collisionHappened == false)
-        {
-            float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, controller.transform.position, step);
-        }*/
-
-
-        //Vector3 direction;
-        //direction = new Vector3(flightPath.transform.position.x, 0, flightPath.transform.position.z);
-        //transform.LookAt(transform.position + 10 * direction);
-        //transform.Rotate(0, flightPath.transform.position.x, 0);
-
-        if (flightPath.transform.position.x > -1)
-        {
-            transform.Rotate(0, flightPath.transform.position.x, 0, Space.World);
-        }
-        else
-            transform.Rotate(0, -flightPath.transform.position.x, 0, Space.World);
-
-        transform.position = flightPath.transform.position;
+        HandleControllerInput(); 
+        UpdatePosition();
     }
 
+    void UpdatePosition()
+    {
+        if (isIdle)
+        {
+            falcon.transform.position = flightPath.transform.position;
+        }
+
+        if (collisionHappened == false && !isIdle)
+        {
+            float step = speed * Time.deltaTime;
+            falcon.transform.position = Vector3.MoveTowards(transform.position, controller.transform.position, step);
+        }
+    }
 
     void OnCollisionEnter(Collision collisionInfo)
     {
-        if (collisionInfo.collider.name == "RightController")
+        if (collisionInfo.collider.name == "Controller (right)")
         {
             falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
             falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
             //serialController.SendSerialMessage("p");
             collisionHappened = true;
-            
         }
+    }
+
+    void HandleControllerInput()
+    {
+        device = SteamVR_Controller.Input(2);
+
+        if (device.GetAxis().x != 0 || device.GetAxis().y != 0)
+        {
+            Debug.Log(device.GetAxis().x + " " + device.GetAxis().y);
+        }
+        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) || Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log("Right trigger pressed");
+            falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
+            falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
+            isIdle = false;
+
+        }
+        /*
+        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+        {
+            if (isIdle)
+                isIdle = false;
+            else
+                isIdle = true;
+        }*/
     }
 }

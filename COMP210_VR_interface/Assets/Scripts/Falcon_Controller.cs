@@ -33,6 +33,7 @@ public class Falcon_Controller : MonoBehaviour
         if (isIdle)
         {
             falcon.transform.position = flightPath.transform.position;
+            falcon.transform.LookAt(new Vector3 (flightPath.transform.position.x, flightPath.transform.position.y, flightPath.transform.position.z + 1));
         }
 
         if (collisionHappened == false && !isIdle)
@@ -44,13 +45,12 @@ public class Falcon_Controller : MonoBehaviour
 
     void OnCollisionEnter(Collision collisionInfo)
     {
-        if (collisionInfo.collider.name == "Controller (right)")
-        {
-            falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
-            falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
-            //serialController.SendSerialMessage("p");
-            collisionHappened = true;
-        }
+        falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
+        falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
+        //serialController.SendSerialMessage("p");
+        collisionHappened = true;
+        isIdle = false;
+
     }
 
     void HandleControllerInput()
@@ -64,18 +64,8 @@ public class Falcon_Controller : MonoBehaviour
         if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) || Input.GetKeyDown(KeyCode.M))
         {
             Debug.Log("Right trigger pressed");
-            falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
-            falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
             isIdle = false;
 
         }
-        /*
-        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
-        {
-            if (isIdle)
-                isIdle = false;
-            else
-                isIdle = true;
-        }*/
     }
 }

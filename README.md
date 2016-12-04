@@ -1,5 +1,12 @@
 #COMP210 – Assignment 2 Proposal
 
+###Assets Used from Unity Asset store:
+* [Falcon model and animations](https://www.assetstore.unity3d.com/en/#!/content/26962)
+* [Grass texture](https://www.assetstore.unity3d.com/en/#!/content/29037)
+* [Smart phone model and animations](https://www.assetstore.unity3d.com/en/#!/content/58471)
+* [Skybox](https://www.assetstore.unity3d.com/en/#!/content/21737)
+* [SteamVR plugin](https://www.assetstore.unity3d.com/en/#!/content/32647)
+
 My COMP230 component is a companion Falcon AI. For COMP210 I’d like to make a VR interface to interact with the AI.  
  
 The main way to interact with the falcon will be using a smart phone to command it in game. This will use the Vive controller track pad and grip button to operate. The user can use the track pad to swipe through different screens on the phone and press it to select one.  The controller can vibrate when the player needs to look at it.  

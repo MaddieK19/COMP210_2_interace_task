@@ -7,7 +7,7 @@ public class Falcon_Controller : MonoBehaviour
     public GameObject controller;
     public SerialController serialController;
     public GameObject flightPath;
-    public SteamVR_Controller.Device device;
+    public SteamVR_TrackedController trackedController;
 
     public float speed;
     public bool collisionHappened = false;
@@ -50,21 +50,24 @@ public class Falcon_Controller : MonoBehaviour
         //serialController.SendSerialMessage("p");
         collisionHappened = true;
         isIdle = false;
-
     }
 
     void HandleControllerInput()
     {
-        device = SteamVR_Controller.Input(2);
-
-        if (device.GetAxis().x != 0 || device.GetAxis().y != 0)
-        {
-            Debug.Log(device.GetAxis().x + " " + device.GetAxis().y);
-        }
-        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) || Input.GetKeyDown(KeyCode.M))
+        if (trackedController.triggerPressed)
         {
             Debug.Log("Right trigger pressed");
             isIdle = false;
+            falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
+            falcon.GetComponent<Animation>().CrossFade("FA_IdleLand");
+
+        }
+        if (trackedController.gripped)
+        {
+            Debug.Log("Grip pressed");
+            isIdle = true;
+            falcon.GetComponent<Animation>().wrapMode = WrapMode.Loop;
+            falcon.GetComponent<Animation>().CrossFade("FA_IdleFly");
 
         }
     }
